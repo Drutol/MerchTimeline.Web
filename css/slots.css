@@ -1,0 +1,9 @@
+#slots-page .slot-item {
+    width: auto;
+    height: 50px;
+
+    background: white;
+    border-radius: 15px;
+    margin: 16px;
+    padding: 16px;
+}

@@ -1,6 +1,9 @@
 #merch-page {
     text-align: justify;
     text-align-last: auto;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .merch-item {

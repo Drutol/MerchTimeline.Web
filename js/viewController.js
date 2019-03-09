@@ -4,9 +4,11 @@ class ViewController {
 
         this.timelineView = document.getElementById("timeline-page");
         this.merchView = document.getElementById("merch-page");
+        this.slotsView = document.getElementById("slots-page");
 
-        frame.removeChild(this.timelineView);
-        frame.removeChild(this.merchView);
+        while (frame.firstChild) {
+            frame.removeChild(frame.firstChild);
+        }
     }
 
     navigateTimeline() {
@@ -15,6 +17,10 @@ class ViewController {
 
     navigateMerch() {
         this.setView(this.merchView);
+    }
+
+    navigateSlots() {
+        this.setView(this.slotsView);
     }
 
     setView(view) {

@@ -14,26 +14,28 @@ class TimelineController {
         this.container = document.getElementById("timeline-page");
         let forEach = Array.prototype.forEach;
 
-        var timelineData = await apiCommunicator.getTimeline();
+        let timelineData = await apiCommunicator.getTimeline();
 
-        var groups = [];
-        var entries = [];
+        let groups = [];
+        let entries = [];
         forEach.call(timelineData.slots, slot => {
             groups.push({ id: slot.name, content: slot.name });
 
             forEach.call(slot.timelineEntries, entry => {
-                entries.push({
-                    id: slot.name,
-                    content: `<img src=\"${entry.imageUrl}\" class=\"timeline-picture\"/>`,
-                    start: Date.parse(entry.start),
-                    end: Date.parse(entry.end),
-                    group: slot.name
-                });
+                if (entry.imageUrl != null && entry.imageUrl != "") {
+                    entries.push({
+                        id: slot.name,
+                        content: `<img src=\"${entry.imageUrl}\" class=\"timeline-picture\"/>`,
+                        start: Date.parse(entry.start),
+                        end: Date.parse(entry.end),
+                        group: slot.name
+                    });
+                }
             });
         });
 
         if (this.timelineControl)
-            this.timelineControl.destroy();           
+            this.timelineControl.destroy();
         this.timelineControl = null;
 
         this.timelineControl =

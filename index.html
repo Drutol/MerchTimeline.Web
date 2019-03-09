@@ -6,10 +6,12 @@
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/timelinePage.css">
     <link rel="stylesheet" type="text/css" href="css/merchList.css">
+    <link rel="stylesheet" type="text/css" href="css/slots.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
     <script type="text/javascript" src="js/apiCommunicator.js"></script>
+    <script type="text/javascript" src="js/slotsController.js"></script>
     <script type="text/javascript" src="js/merchListController.js"></script>
     <script type="text/javascript" src="js/timelineController.js"></script>
     <script type="text/javascript" src="js/viewController.js"></script>
@@ -27,10 +29,17 @@
         <div id="merch-page">
             <template id="merch-item-template">
                 <div class="merch-item">
-                    <img id="item-img"/>
+                    <img id="item-img" />
                 </div>
             </template>
+        </div>
 
+        <div id="slots-page">
+            <template id="slot-item-template">
+                <div class="slot-item">
+                    <p id="slot-name"></p>
+                </div>
+            </template>
         </div>
 
     </div>
@@ -38,6 +47,7 @@
     <nav>
         <a id="button-timeline">Timeline</a>
         <a id="button-merch">Merch</a>
+        <a id="button-slots">Slots</a>
     </nav>
 
     <header>

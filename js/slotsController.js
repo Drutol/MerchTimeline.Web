@@ -1,4 +1,4 @@
-class MerchListController {
+class SlotsController {
 
     constructor(apiCommunicator) {
         this.apiCommunicator = apiCommunicator;
@@ -6,13 +6,13 @@ class MerchListController {
     }
 
     async navigatedTo() {
+
         if (this.initialized)
             return;
-
-        let container = document.getElementById("merch-page");
-        let template = document.getElementById("merch-item-template");
-        let merch = await this.apiCommunicator.getMerch();
-        merch.sort((a,b) => a.kind - b.kind).reverse().forEach(merchItem => {
+        let container = document.getElementById("slots-page");
+        let template = document.getElementById("slot-item-template");
+        let merch = await this.apiCommunicator.getSlots();
+        merch.forEach(merchItem => {
             let node = document.importNode(template.content, true);
             this.itemTemplate(node, merchItem);
             container.appendChild(node);
@@ -23,6 +23,7 @@ class MerchListController {
     }
 
     itemTemplate(node, item) {
-        node.getElementById("item-img").setAttribute("src", item.imageUrl);
+        node.getElementById("slot-name").innerText = item.name;
     }
+
 }
