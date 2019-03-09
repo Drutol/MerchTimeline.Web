@@ -1,0 +1,26 @@
+#merch-page {
+    text-align: justify;
+    text-align-last: auto;
+}
+
+.merch-item {
+    display: inline-block;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
+    background: white;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.merch-item img {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column: 1;
+    max-height: 20em;
+    max-width: 15em;
+    border-radius: 5px;
+    margin: 16px;
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, .1);
+}
