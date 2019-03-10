@@ -3,26 +3,85 @@ class MerchListController {
     constructor(apiCommunicator) {
         this.apiCommunicator = apiCommunicator;
         this.initialized = false;
+        this.dialogInitialized = false;
     }
 
     async navigatedTo() {
         if (this.initialized)
             return;
 
-        let container = document.getElementById("merch-page");
-        let template = document.getElementById("merch-item-template");
-        let merch = await this.apiCommunicator.getMerch();
-        merch.sort((a,b) => a.kind - b.kind).reverse().forEach(merchItem => {
-            let node = document.importNode(template.content, true);
-            this.itemTemplate(node, merchItem);
-            container.appendChild(node);
-        });
+        this.addPeriodDialog = document.getElementById("add-period-modal");
+        this.setUpDialog();
+
+        await this.refreshData();
 
         this.initialized = true;
+    }
 
+    async refreshData() {
+        let container = document.getElementById("merch-grid");
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+
+        let template = document.getElementById("merch-item-template");
+        let merch = await this.apiCommunicator.getMerch();
+        merch.sort((a, b) => a.kind - b.kind).reverse().forEach(merchItem => {
+            let node = document.importNode(template.content, true);
+            container.appendChild(node);
+            this.itemTemplate(container.childNodes[container.childNodes.length - 2], merchItem);
+        });
     }
 
     itemTemplate(node, item) {
-        node.getElementById("item-img").setAttribute("src", item.imageUrl);
+        node.getElementsByTagName("img")[0].setAttribute("src", item.imageUrl);
+        node.onclick = () => this.itemClicked(item);
+    }
+
+    async itemClicked(item) {
+        this.addPeriodDialog.style.display = "block";
+
+        if (!this.dialogInitialized) {
+            this.startDatePicker = new Pikaday({
+                field: document.getElementById('add-period-modal-startdate'),
+                defaultDate: new Date(),
+                setDefaultDate: true
+            });
+            this.endDatePicker = new Pikaday({ field: document.getElementById('add-period-modal-enddate') });
+            this.slotPicker = document.getElementById('add-period-modal-slots');
+            this.addPeriodButton = document.getElementById('add-period-modal-button')
+
+            this.dialogInitialized = true;
+        }
+
+        while (this.slotPicker.firstChild) {
+            this.slotPicker.removeChild(this.slotPicker.firstChild);
+        }
+
+        var slots = await this.apiCommunicator.getSlots();
+
+        slots.forEach(slot => {
+            var option = document.createElement("option");
+            option.value = slot.id;
+            option.text = slot.name;
+            this.slotPicker.add(option);
+        });
+
+        this.addPeriodButton.onclick = async () => {
+            await this.apiCommunicator.addUsagePeriod({
+                SlotId: this.slotPicker.options[this.slotPicker.selectedIndex].value,
+                MerchItemId: item.id,
+                Start: this.startDatePicker.getDate(),
+                End: this.endDatePicker.getDate(),
+            });
+        }
+    }
+
+    setUpDialog() {
+        window.onclick = (event) => {
+            if (event.target == this.addPeriodDialog) {
+                this.addPeriodDialog.style.display = "none";
+            }
+        }
     }
 }

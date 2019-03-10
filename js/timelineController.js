@@ -24,7 +24,7 @@ class TimelineController {
             forEach.call(slot.timelineEntries, entry => {
                 if (entry.imageUrl != null && entry.imageUrl != "") {
                     entries.push({
-                        id: slot.name,
+                        id: entry.id,
                         content: `<img src=\"${entry.imageUrl}\" class=\"timeline-picture\"/>`,
                         start: Date.parse(entry.start),
                         end: Date.parse(entry.end),

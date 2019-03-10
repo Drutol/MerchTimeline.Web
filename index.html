@@ -7,8 +7,14 @@
     <link rel="stylesheet" type="text/css" href="css/timelinePage.css">
     <link rel="stylesheet" type="text/css" href="css/merchList.css">
     <link rel="stylesheet" type="text/css" href="css/slots.css">
+    <link rel="stylesheet" type="text/css" href="css/addPeriodModal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
     <script type="text/javascript" src="js/apiCommunicator.js"></script>
     <script type="text/javascript" src="js/slotsController.js"></script>
@@ -27,32 +33,80 @@
         </div>
 
         <div id="merch-page">
+            <ul id="merch-grid">
+
+            </ul>
+
             <template id="merch-item-template">
                 <div class="merch-item">
-                    <img id="item-img" />
+                    <img tag="item-img" />
                 </div>
             </template>
         </div>
 
         <div id="slots-page">
+            <ul id="slots-list">
+
+            </ul>
+            <footer class="add-slot">
+                <input id="slot-name-input">
+                <button id="slot-add-button">
+                    <i class="fas fa-plus"></i>
+                    Add
+                </button>
+            </footer>
+
             <template id="slot-item-template">
-                <div class="slot-item">
-                    <p id="slot-name"></p>
-                </div>
+                <li class="slot-item">
+                    <title></title>
+                    <button>
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </li>
             </template>
         </div>
 
     </div>
 
     <nav>
-        <a id="button-timeline">Timeline</a>
-        <a id="button-merch">Merch</a>
-        <a id="button-slots">Slots</a>
+        <a id="button-timeline">
+            <i class="fas fa-chart-line"></i>
+            Timeline
+        </a>
+        <a id="button-merch">
+            <i class="fas fa-hat-wizard"></i>
+            Merch
+        </a>
+        <a id="button-slots">
+            <i class="far fa-map"></i>
+            Slots
+        </a>
     </nav>
 
     <header>
         <h1>MerchTimeline</h1>
     </header>
+
+    <div id="add-period-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="add-period-modal-form">
+                <h2>Add usage period</h2>
+                <p>Start date:</p>
+                <input type="text" id="add-period-modal-startdate">
+                <p>End date:</p>
+                <input type="text" id="add-period-modal-enddate">
+                <p>Slot:</p>
+                <select id="add-period-modal-slots">
+                    
+                </select>
+                <p></p>
+                <button id="add-period-modal-button">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
 
 </body>
 
