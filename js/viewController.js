@@ -18,6 +18,9 @@ class ViewController {
         this.merchButton = document.getElementById("button-merch");
         this.slotsButton = document.getElementById("button-slots")
 
+        this.refreshButton = document.getElementById("button-refresh")
+        this.tokenButton = document.getElementById("button-token")
+
         this.setUpNavButtons();
 
         while (contentContainer.firstChild) {
@@ -28,16 +31,19 @@ class ViewController {
     navigateTimeline() {
         this.setView(this.timelineView, this.timelineButton);
         this.timelineController.navigatedTo();
+        this.currentController = this.timelineController;
     }
 
     navigateMerch() {
         this.setView(this.merchView, this.merchButton);
         this.merchListController.navigatedTo();
+        this.currentController = this.merchListController;
     }
 
     navigateSlots() {
         this.setView(this.slotsView, this.slotsButton);
         this.slotsController.navigatedTo();
+        this.currentController = this.slotsController;
     }
 
     setView(view, button) {
@@ -66,5 +72,18 @@ class ViewController {
         this.slotsButton.onclick = () => {
             this.navigateSlots();
         };
+
+        this.refreshButton.onclick = () => {
+            this.currentController.refreshData();
+        }
+
+        this.tokenButton.onclick = () => {
+            let token = prompt("Acess token", null);
+
+            if(token == null)
+                return;
+
+            window.localStorage.setItem("authToken", token);
+        }
     }
 }

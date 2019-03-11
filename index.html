@@ -13,7 +13,9 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
     <script type="text/javascript" src="js/apiCommunicator.js"></script>
@@ -69,22 +71,30 @@
     </div>
 
     <nav>
-        <a id="button-timeline">
-            <i class="fas fa-chart-line"></i>
-            Timeline
-        </a>
-        <a id="button-merch">
-            <i class="fas fa-hat-wizard"></i>
-            Merch
-        </a>
-        <a id="button-slots">
-            <i class="far fa-map"></i>
-            Slots
+        <ul>
+            <a id="button-timeline">
+                <i class="fas fa-chart-line"></i>
+                Timeline
+            </a>
+            <a id="button-merch">
+                <i class="fas fa-hat-wizard"></i>
+                Merch
+            </a>
+            <a id="button-slots">
+                <i class="far fa-map"></i>
+                Slots
+            </a>
+        </ul>
+        <a id="button-token">
+            <i class="fas fa-unlock-alt"></i>
         </a>
     </nav>
 
     <header>
         <h1>MerchTimeline</h1>
+        <div id="button-refresh">
+            <i class="fas fa-redo fa-2x"></i>
+        </div>
     </header>
 
     <div id="add-period-modal" class="modal">
@@ -98,7 +108,7 @@
                 <input type="text" id="add-period-modal-enddate">
                 <p>Slot:</p>
                 <select id="add-period-modal-slots">
-                    
+
                 </select>
                 <p></p>
                 <button id="add-period-modal-button">

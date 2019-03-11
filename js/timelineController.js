@@ -12,16 +12,26 @@ class TimelineController {
             return;
 
         this.container = document.getElementById("timeline-page");
-        let forEach = Array.prototype.forEach;
 
-        let timelineData = await apiCommunicator.getTimeline();
+        this.refreshData();
+
+        this.initialized = true;
+    }
+
+    async refreshData() {
+        let timelineData;
+        try {
+            timelineData = await apiCommunicator.getTimeline();
+        } catch {
+            return;
+        }
 
         let groups = [];
         let entries = [];
-        forEach.call(timelineData.slots, slot => {
+        timelineData.slots.forEach(slot => {
             groups.push({ id: slot.name, content: slot.name });
 
-            forEach.call(slot.timelineEntries, entry => {
+            slot.timelineEntries.forEach(entry => {
                 if (entry.imageUrl != null && entry.imageUrl != "") {
                     entries.push({
                         id: entry.id,
@@ -42,8 +52,5 @@ class TimelineController {
             new vis.Timeline(this.container, new vis.DataSet(entries), groups, {
                 height: `${this.container.parentElement.clientHeight.toString()}px`
             });
-
-
-        this.initialized = true;
     }
 }

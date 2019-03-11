@@ -25,7 +25,15 @@ class MerchListController {
         }
 
         let template = document.getElementById("merch-item-template");
-        let merch = await this.apiCommunicator.getMerch();
+
+        let merch;
+        try {
+            merch = await this.apiCommunicator.getMerch();
+        }
+        catch {
+            return;
+        }
+
         merch.sort((a, b) => a.kind - b.kind).reverse().forEach(merchItem => {
             let node = document.importNode(template.content, true);
             container.appendChild(node);
@@ -58,7 +66,13 @@ class MerchListController {
             this.slotPicker.removeChild(this.slotPicker.firstChild);
         }
 
-        var slots = await this.apiCommunicator.getSlots();
+        let slots;
+        try {
+            slots = await this.apiCommunicator.getSlots();
+        }
+        catch {
+            return;
+        }
 
         slots.forEach(slot => {
             var option = document.createElement("option");
@@ -68,12 +82,26 @@ class MerchListController {
         });
 
         this.addPeriodButton.onclick = async () => {
-            await this.apiCommunicator.addUsagePeriod({
-                SlotId: this.slotPicker.options[this.slotPicker.selectedIndex].value,
-                MerchItemId: item.id,
-                Start: this.startDatePicker.getDate(),
-                End: this.endDatePicker.getDate(),
-            });
+            try {
+                await this.apiCommunicator.addUsagePeriod({
+                    SlotId: this.slotPicker.options[this.slotPicker.selectedIndex].value,
+                    MerchItemId: item.id,
+                    Start: this.startDatePicker.getDate(),
+                    End: this.endDatePicker.getDate(),
+                });
+                this.addPeriodDialog.style.display = "none";
+
+                new Noty({
+                    theme: 'metroui',
+                    type: 'success',
+                    text: 'Successfully added period.',
+                    timeout: 2000,
+                    progressBar: true,
+                    layout: 'bottomRight'
+                }).show();
+            } catch (error) {
+
+            }
         }
     }
 

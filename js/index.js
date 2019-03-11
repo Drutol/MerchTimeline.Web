@@ -17,6 +17,6 @@ document.addEventListener("DOMContentLoaded", function (ev) {
         merchListController,
         slotsController);
 
-    viewController.navigateMerch();
+    viewController.navigateTimeline();
 });
 

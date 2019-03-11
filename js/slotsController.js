@@ -14,7 +14,7 @@ class SlotsController {
         this.slotAddButton = document.getElementById("slot-add-button");
 
         this.slotAddButton.onclick = async () => {
-            await this.apiCommunicator.addSlot({name: this.slotTextBox.value})
+            await this.apiCommunicator.addSlot({ name: this.slotTextBox.value })
             this.refreshData();
         }
 
@@ -30,7 +30,14 @@ class SlotsController {
         }
 
         let template = document.getElementById("slot-item-template");
-        let slots = await this.apiCommunicator.getSlots();
+        let slots;
+        try {
+            slots = await this.apiCommunicator.getSlots();
+        }
+        catch{
+            return;
+        }
+
         slots.forEach(slot => {
             let node = document.importNode(template.content, true);
             this.itemTemplate(node, slot);
