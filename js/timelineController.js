@@ -4,6 +4,12 @@ class TimelineController {
         this.apiCommunicator = apiCommunicator;
         this.timelineControl = null;
         this.initialized = false;
+        this.timelineData = null;
+        this.selectedItemId = null;
+        this.editPaneInitialized = false;
+
+        this.editPaneContainer = document.getElementById("edit-pane-container");
+        this.editPane = document.getElementById("edit-pane");
     }
 
     async navigatedTo() {
@@ -13,22 +19,22 @@ class TimelineController {
 
         this.container = document.getElementById("timeline-page");
 
+        this.setUpEditPane();
         this.refreshData();
 
         this.initialized = true;
     }
 
     async refreshData() {
-        let timelineData;
         try {
-            timelineData = await apiCommunicator.getTimeline();
+            this.timelineData = await apiCommunicator.getTimeline();
         } catch {
             return;
         }
 
         let groups = [];
         let entries = [];
-        timelineData.slots.forEach(slot => {
+        this.timelineData.slots.forEach(slot => {
             groups.push({ id: slot.name, content: slot.name });
 
             slot.timelineEntries.forEach(entry => {
@@ -52,5 +58,69 @@ class TimelineController {
             new vis.Timeline(this.container, new vis.DataSet(entries), groups, {
                 height: `${this.container.parentElement.clientHeight.toString()}px`
             });
+
+        this.timelineControl.on('select', props => this.onItemClicked(props))
+    }
+
+
+    onItemClicked(props) {
+        if (this.selectedItemId != null)
+            return;
+
+        this.selectedItemId = props.items[0];
+
+        this.editPaneContainer.classList.toggle("container-visible");
+        this.editPane.classList.toggle("pane-opened");
+
+        this.onPaneOpened();
+    }
+
+    onPaneOpened() {
+        this.initializeEditPane();
+
+    }
+
+    initializeEditPane() {
+        let editedItem = this.timelineData
+            .slots.flatMap(x => x.timelineEntries)
+            .find(entry => entry.id == this.selectedItemId);
+
+        if (this.editPaneInitialized) {
+            this.startDatePicker.destroy();
+            this.endDatePicker.destroy();
+        }
+        else {
+            document.getElementById('edit-pane-button-update').onclick = async () => {
+                try {
+                    await this.apiCommunicator.modifyPeriod(editedItem.id, {
+                        Start: this.startDatePicker.getDate(),
+                        End: this.endDatePicker.getDate(),
+                    })
+                } catch {
+                    return;
+                }
+            }
+        }
+
+        this.startDatePicker = new Pikaday({
+            field: document.getElementById('edit-pane-startdate'),
+        });
+        this.startDatePicker.setDate(editedItem.start);
+        this.endDatePicker = new Pikaday({
+            field: document.getElementById('edit-pane-enddate'),
+        });
+        this.endDatePicker.setDate(editedItem.end);
+
+        this.editPaneInitialized = true;
+    }
+
+    setUpEditPane() {
+        window.addEventListener("click", (event) => {
+            if (event.target == this.editPaneContainer) {
+                this.editPaneContainer.classList.toggle("container-visible");
+                this.editPane.classList.toggle("pane-opened");
+                this.selectedItemId = null;
+            };
+        });
     }
 }

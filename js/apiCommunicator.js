@@ -1,7 +1,8 @@
 class ApiCommunicator {
 
     constructor() {
-        this.baseAddress = "https://mylovelyvps.ml/api";
+        //this.baseAddress = "https://mylovelyvps.ml/api";
+        this.baseAddress = "https://localhost:5001/api";
     }
 
     async getTimeline() {
@@ -37,6 +38,12 @@ class ApiCommunicator {
     async addUsagePeriod(period) {
         let json = await this.httpPostAsync(
             `${this.baseAddress}/timeline`, JSON.stringify(period));
+        return JSON.parse(json);
+    }
+
+    async modifyPeriod(id, period) {
+        let json = await this.httpPostAsync(
+            `${this.baseAddress}/timeline/${id}/modify`, JSON.stringify(period));
         return JSON.parse(json);
     }
 

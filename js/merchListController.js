@@ -57,7 +57,7 @@ class MerchListController {
             });
             this.endDatePicker = new Pikaday({ field: document.getElementById('add-period-modal-enddate') });
             this.slotPicker = document.getElementById('add-period-modal-slots');
-            this.addPeriodButton = document.getElementById('add-period-modal-button')
+            this.addPeriodButton = document.getElementById('add-period-modal-button');
 
             this.dialogInitialized = true;
         }
@@ -106,10 +106,10 @@ class MerchListController {
     }
 
     setUpDialog() {
-        window.onclick = (event) => {
+        window.addEventListener("click", (event) => {
             if (event.target == this.addPeriodDialog) {
                 this.addPeriodDialog.style.display = "none";
-            }
-        }
+            };
+        });
     }
 }
