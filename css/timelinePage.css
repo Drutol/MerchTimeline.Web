@@ -3,11 +3,33 @@
 }
 
 .vis-item-content {
-    background-image: linear-gradient(120deg, #db4500, #a5009d7f);
+
 }
 
 .vis-item {
     border: 0;
+    border-color: transparent;
+    background-image: linear-gradient(120deg, #db4500, #a5009dd7);
+}
+
+.timeline-item-no-end {
+    outline-offset: -4.5px;
+    outline-style: dotted !important;
+    outline-width: 3px;
+    outline-color:#db4500;
+
+    background: transparent;
+}
+
+.vis-item.vis-selected:not(.timeline-item-no-end) {
+    border-color:#db4500;
+    background: transparent;
+    background-image: linear-gradient(120deg, #db4500, #a5009dd7);
+}
+
+.vis-item.vis-selected {
+    border-color:#db4500;
+    background: transparent;
 }
 
 /* EditPanel */
@@ -16,7 +38,8 @@
     position: fixed;
     z-index: 3;
     padding-top: 100px;
-    left: -100%;
+    left: 0;
+    visibility: hidden;
     top: 0;
     width: 100%;
     height: 100%;
@@ -28,7 +51,7 @@
 }
 
 #timeline-page .container-visible {
-    left: 0;
+    visibility: visible;
     opacity: 1;
 }
 

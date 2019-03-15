@@ -10,6 +10,9 @@ class TimelineController {
 
         this.editPaneContainer = document.getElementById("edit-pane-container");
         this.editPane = document.getElementById("edit-pane");
+
+        this.editPaneEndDateInput = document.getElementById('edit-pane-enddate');
+        this.editPaneStartDateInput = document.getElementById('edit-pane-startdate');
     }
 
     async navigatedTo() {
@@ -42,9 +45,10 @@ class TimelineController {
                     entries.push({
                         id: entry.id,
                         content: `<img src=\"${entry.imageUrl}\" class=\"timeline-picture\"/>`,
-                        start: Date.parse(entry.start),
-                        end: Date.parse(entry.end),
-                        group: slot.name
+                        start: new Date(entry.start).addHours(1),
+                        end: entry.end == null ? new Date().addHours(100) : new Date(entry.end),
+                        group: slot.name,
+                        className: entry.end == null ? "timeline-item-no-end" : ""
                     });
                 }
             });
@@ -56,7 +60,13 @@ class TimelineController {
 
         this.timelineControl =
             new vis.Timeline(this.container, new vis.DataSet(entries), groups, {
-                height: `${this.container.parentElement.clientHeight.toString()}px`
+                height: `${this.container.parentElement.clientHeight.toString()}px`,
+                margin: {
+                    item: {
+                        vertical: 5,
+                        horizontal: 0
+                    }
+                }
             });
 
         this.timelineControl.on('select', props => this.onItemClicked(props))
@@ -94,20 +104,22 @@ class TimelineController {
                 try {
                     await this.apiCommunicator.modifyPeriod(editedItem.id, {
                         Start: this.startDatePicker.getDate(),
-                        End: this.endDatePicker.getDate(),
+                        End: this.editPaneEndDateInput.value == "" ? null : this.endDatePicker.getDate(),
                     })
                 } catch {
                     return;
                 }
+
+                this.closePane();
             }
         }
 
         this.startDatePicker = new Pikaday({
-            field: document.getElementById('edit-pane-startdate'),
+            field: this.editPaneStartDateInput
         });
         this.startDatePicker.setDate(editedItem.start);
         this.endDatePicker = new Pikaday({
-            field: document.getElementById('edit-pane-enddate'),
+            field: this.editPaneEndDateInput
         });
         this.endDatePicker.setDate(editedItem.end);
 
@@ -117,10 +129,14 @@ class TimelineController {
     setUpEditPane() {
         window.addEventListener("click", (event) => {
             if (event.target == this.editPaneContainer) {
-                this.editPaneContainer.classList.toggle("container-visible");
-                this.editPane.classList.toggle("pane-opened");
-                this.selectedItemId = null;
+                this.closePane();
             };
         });
+    }
+
+    closePane() {
+        this.editPaneContainer.classList.toggle("container-visible");
+        this.editPane.classList.toggle("pane-opened");
+        this.selectedItemId = null;
     }
 }

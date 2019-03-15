@@ -2,18 +2,19 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="css/timelinePage.css">
-    <link rel="stylesheet" type="text/css" href="css/merchList.css">
-    <link rel="stylesheet" type="text/css" href="css/slots.css">
-    <link rel="stylesheet" type="text/css" href="css/addPeriodModal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="css/timelinePage.css">
+    <link rel="stylesheet" type="text/css" href="css/merchList.css">
+    <link rel="stylesheet" type="text/css" href="css/slots.css">
+    <link rel="stylesheet" type="text/css" href="css/addPeriodModal.css">
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
@@ -33,13 +34,14 @@
         <div id="timeline-page">
 
 
-            <div id="edit-pane-container" class="container-visible">
-                <div id="edit-pane" class="pane-opened">
+            <div id="edit-pane-container">
+                <div id="edit-pane">
                     <h1>Edit</h1>
                     <p>Start date:</p>
-                    <input type="text" id="edit-pane-startdate">
+                    <input type="text" class="gradient-box" id="edit-pane-startdate" autocomplete="off">
                     <p>End date:</p>
-                    <input type="text" placeholder="No end date" id="edit-pane-enddate">
+                    <input placeholder="No end date" id="edit-pane-enddate" autocomplete="off"
+                        type="search">
                     <button id="edit-pane-button-update">
                         Update
                     </button>
@@ -116,9 +118,9 @@
             <div class="add-period-modal-form">
                 <h2>Add usage period</h2>
                 <p>Start date:</p>
-                <input type="text" id="add-period-modal-startdate">
+                <input type="text" id="add-period-modal-startdate" autocomplete="off">
                 <p>End date:</p>
-                <input type="text" id="add-period-modal-enddate">
+                <input type="text" id="add-period-modal-enddate" autocomplete="off">
                 <p>Slot:</p>
                 <select id="add-period-modal-slots">
 

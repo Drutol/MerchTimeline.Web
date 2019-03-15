@@ -36,12 +36,18 @@ class ApiCommunicator {
     }
 
     async addUsagePeriod(period) {
+        period.Start = period.Start.addHours(1 + 1/60);
+        if(period.End != null)
+            period.End = period.End.addHours(1 + 1/60);
         let json = await this.httpPostAsync(
             `${this.baseAddress}/timeline`, JSON.stringify(period));
         return JSON.parse(json);
     }
 
     async modifyPeriod(id, period) {
+        period.Start = period.Start.addHours(1 + 1/60);
+        if(period.End != null)
+            period.End = period.End.addHours(1 + 1/60);
         let json = await this.httpPostAsync(
             `${this.baseAddress}/timeline/${id}/modify`, JSON.stringify(period));
         return JSON.parse(json);
