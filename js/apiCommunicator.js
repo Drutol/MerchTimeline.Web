@@ -1,8 +1,8 @@
 class ApiCommunicator {
 
     constructor() {
-        this.baseAddress = "https://mylovelyvps.ml/api";
-        //this.baseAddress = "https://localhost:5001/api";
+        //this.baseAddress = "https://mylovelyvps.ml/api";
+        this.baseAddress = "https://localhost:5001/api";
     }
 
     async getTimeline() {

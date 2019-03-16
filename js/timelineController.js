@@ -18,8 +18,10 @@ class TimelineController {
 
     async navigatedTo() {
 
-        if(this.refreshDataOnNextNavigation && this.initialized)
+        if (this.refreshDataOnNextNavigation && this.initialized) {
             this.refreshData();
+            this.refreshDataOnNextNavigation = false;
+        }
 
         if (this.initialized)
             return;
@@ -95,7 +97,7 @@ class TimelineController {
     }
 
     initializeEditPane() {
-        let editedItem = this.timelineData
+        this.editedItem = this.timelineData
             .slots.flatMap(x => x.timelineEntries)
             .find(entry => entry.id == this.selectedItemId);
 
@@ -106,7 +108,7 @@ class TimelineController {
         else {
             document.getElementById('edit-pane-button-update').onclick = async () => {
                 try {
-                    await this.apiCommunicator.modifyPeriod(editedItem.id, {
+                    await this.apiCommunicator.modifyPeriod(this.editedItem.id, {
                         Start: this.startDatePicker.getDate(),
                         End: this.editPaneEndDateInput.value == "" ? null : this.endDatePicker.getDate(),
                     })
@@ -128,7 +130,7 @@ class TimelineController {
             }
             document.getElementById('edit-pane-button-remove').onclick = async () => {
                 try {
-                    await this.apiCommunicator.removePeriod(editedItem.id);
+                    await this.apiCommunicator.removePeriod(this.editedItem.id);
                 } catch {
                     return;
                 }
@@ -150,11 +152,11 @@ class TimelineController {
         this.startDatePicker = new Pikaday({
             field: this.editPaneStartDateInput
         });
-        this.startDatePicker.setDate(editedItem.start);
+        this.startDatePicker.setDate(this.editedItem.start);
         this.endDatePicker = new Pikaday({
             field: this.editPaneEndDateInput
         });
-        this.endDatePicker.setDate(editedItem.end);
+        this.endDatePicker.setDate(this.editedItem.end);
 
         this.editPaneInitialized = true;
     }

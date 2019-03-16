@@ -89,7 +89,7 @@ class MerchListController {
                     Start: this.startDatePicker.getDate(),
                     End: this.endDatePicker.getDate(),
                 });
-                this.addPeriodDialog.style.display = "none";
+                this.addPeriodDialog.classList.toggle("modal-visible")
 
                 new Noty({
                     theme: 'metroui',
