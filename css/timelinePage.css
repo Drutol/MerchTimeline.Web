@@ -73,9 +73,13 @@
 }
 
 #edit-pane button {
-    margin-top: 28px;
-    width: 100px;
-    justify-self: end;
+    margin-top: 24px;
+    justify-self: stretch;
+}
+
+#edit-pane #edit-pane-button-remove {
+    margin-top: 8px;
+    justify-self: stretch;
 }
 
 #timeline-page .pane-opened {

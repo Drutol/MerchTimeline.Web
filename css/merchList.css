@@ -1,7 +1,6 @@
 #merch-page {
     text-align: justify;
     text-align-last: auto;
-
     overflow-y: scroll;
     height: calc(100vh - 4em);
 }
@@ -16,7 +15,6 @@
     margin: 10px;
     border-radius: 5px;
     cursor: pointer;
-
     transition: box-shadow 0.1s ease-in-out;
 }
 

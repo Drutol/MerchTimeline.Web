@@ -7,6 +7,7 @@ class TimelineController {
         this.timelineData = null;
         this.selectedItemId = null;
         this.editPaneInitialized = false;
+        this.refreshDataOnNextNavigation = false;
 
         this.editPaneContainer = document.getElementById("edit-pane-container");
         this.editPane = document.getElementById("edit-pane");
@@ -16,6 +17,9 @@ class TimelineController {
     }
 
     async navigatedTo() {
+
+        if(this.refreshDataOnNextNavigation && this.initialized)
+            this.refreshData();
 
         if (this.initialized)
             return;
@@ -110,7 +114,36 @@ class TimelineController {
                     return;
                 }
 
+                new Noty({
+                    theme: 'metroui',
+                    type: 'success',
+                    text: 'Successfully edited period.',
+                    timeout: 2000,
+                    progressBar: true,
+                    layout: 'bottomRight'
+                }).show();
+
                 this.closePane();
+                this.refreshData();
+            }
+            document.getElementById('edit-pane-button-remove').onclick = async () => {
+                try {
+                    await this.apiCommunicator.removePeriod(editedItem.id);
+                } catch {
+                    return;
+                }
+
+                new Noty({
+                    theme: 'metroui',
+                    type: 'success',
+                    text: 'Successfully removed period.',
+                    timeout: 2000,
+                    progressBar: true,
+                    layout: 'bottomRight'
+                }).show();
+
+                this.closePane();
+                this.refreshData();
             }
         }
 

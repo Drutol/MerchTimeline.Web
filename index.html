@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/merchList.css">
     <link rel="stylesheet" type="text/css" href="css/slots.css">
     <link rel="stylesheet" type="text/css" href="css/addPeriodModal.css">
+    <link rel="stylesheet" type="text/css" href="css/buttons.css">
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
@@ -42,8 +43,11 @@
                     <p>End date:</p>
                     <input placeholder="No end date" id="edit-pane-enddate" autocomplete="off"
                         type="search">
-                    <button id="edit-pane-button-update">
+                    <button class="btn accent-gradient" id="edit-pane-button-update">
                         Update
+                    </button>
+                    <button class="btn aqua-gradient" id="edit-pane-button-remove">
+                        Remove
                     </button>
                 </div>
             </div>
@@ -120,13 +124,11 @@
                 <p>Start date:</p>
                 <input type="text" id="add-period-modal-startdate" autocomplete="off">
                 <p>End date:</p>
-                <input type="text" id="add-period-modal-enddate" autocomplete="off">
+                <input type="search" id="add-period-modal-enddate" autocomplete="off" placeholder="No end date">
                 <p>Slot:</p>
-                <select id="add-period-modal-slots">
-
-                </select>
+                <select id="add-period-modal-slots"> </select>
                 <p></p>
-                <button id="add-period-modal-button">
+                <button class="btn accent-gradient" id="add-period-modal-button">
                     Add
                 </button>
             </div>

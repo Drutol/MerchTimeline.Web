@@ -47,7 +47,7 @@ class MerchListController {
     }
 
     async itemClicked(item) {
-        this.addPeriodDialog.style.display = "block";
+        this.addPeriodDialog.classList.toggle("modal-visible")
 
         if (!this.dialogInitialized) {
             this.startDatePicker = new Pikaday({
@@ -99,8 +99,17 @@ class MerchListController {
                     progressBar: true,
                     layout: 'bottomRight'
                 }).show();
-            } catch (error) {
 
+                timelineController.refreshDataOnNextNavigation = true;
+            } catch (error) {
+                new Noty({
+                    theme: 'metroui',
+                    type: 'error',
+                    text: 'Failed to add period.',
+                    timeout: 2000,
+                    progressBar: true,
+                    layout: 'bottomRight'
+                }).show();
             }
         }
     }
@@ -108,7 +117,7 @@ class MerchListController {
     setUpDialog() {
         window.addEventListener("click", (event) => {
             if (event.target == this.addPeriodDialog) {
-                this.addPeriodDialog.style.display = "none";
+                this.addPeriodDialog.classList.toggle("modal-visible")
             };
         });
     }
