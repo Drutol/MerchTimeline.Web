@@ -1,6 +1,9 @@
 class TimelineController {
 
+    static tag = "timeline";
+
     constructor(apiCommunicator) {
+        this.tag = TimelineController.tag;
         this.apiCommunicator = apiCommunicator;
         this.timelineControl = null;
         this.initialized = false;
@@ -8,6 +11,7 @@ class TimelineController {
         this.selectedItemId = null;
         this.editPaneInitialized = false;
         this.refreshDataOnNextNavigation = false;
+        
 
         this.editPaneContainer = document.getElementById("edit-pane-container");
         this.editPane = document.getElementById("edit-pane");
@@ -26,7 +30,7 @@ class TimelineController {
         if (this.initialized)
             return;
 
-        this.container = document.getElementById("timeline-page");
+        this.container = document.getElementById("nav-timeline-page");
 
         this.setUpEditPane();
         this.refreshData();
@@ -116,14 +120,7 @@ class TimelineController {
                     return;
                 }
 
-                new Noty({
-                    theme: 'metroui',
-                    type: 'success',
-                    text: 'Successfully edited period.',
-                    timeout: 2000,
-                    progressBar: true,
-                    layout: 'bottomRight'
-                }).show();
+                notificationManager.showSuccess('Successfully edited period.');
 
                 this.closePane();
                 this.refreshData();
@@ -135,14 +132,7 @@ class TimelineController {
                     return;
                 }
 
-                new Noty({
-                    theme: 'metroui',
-                    type: 'success',
-                    text: 'Successfully removed period.',
-                    timeout: 2000,
-                    progressBar: true,
-                    layout: 'bottomRight'
-                }).show();
+                notificationManager.showSuccess('Successfully removed period.');
 
                 this.closePane();
                 this.refreshData();

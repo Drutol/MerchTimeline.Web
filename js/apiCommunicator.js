@@ -36,18 +36,18 @@ class ApiCommunicator {
     }
 
     async addUsagePeriod(period) {
-        period.Start = period.Start.addHours(1 + 1/60);
-        if(period.End != null)
-            period.End = period.End.addHours(1 + 1/60);
+        period.Start = period.Start.addHours(1 + 1 / 60);
+        if (period.End != null)
+            period.End = period.End.addHours(1 + 1 / 60);
         let json = await this.httpPostAsync(
             `${this.baseAddress}/timeline`, JSON.stringify(period));
         return JSON.parse(json);
     }
 
     async modifyPeriod(id, period) {
-        period.Start = period.Start.addHours(1 + 1/60);
-        if(period.End != null)
-            period.End = period.End.addHours(1 + 1/60);
+        period.Start = period.Start.addHours(1 + 1 / 60);
+        if (period.End != null)
+            period.End = period.End.addHours(1 + 1 / 60);
         let json = await this.httpPostAsync(
             `${this.baseAddress}/timeline/${id}/modify`, JSON.stringify(period));
         return JSON.parse(json);
@@ -93,26 +93,11 @@ class ApiCommunicator {
                     }
                     else {
                         if (xmlHttp.status == 401) {
-                            new Noty({
-                                theme: 'metroui',
-                                type: 'warning',
-                                text: 'Failed to authorize with provided token.',
-                                timeout: 2000,
-                                progressBar: true,
-                                layout: 'bottomRight'
-                            }).show();
+                            notificationManager.showWarning('Failed to authorize with provided token.');
                         }
                         else {
-                            new Noty({
-                                theme: 'metroui',
-                                type: 'error',
-                                text: 'Failed to communicate with the server.',
-                                timeout: 2000,
-                                progressBar: true,
-                                layout: 'bottomRight'
-                            }).show();
+                            notificationManager.showError('Failed to communicate with the server.');
                         }
-
                         reject();
                     }
                 }

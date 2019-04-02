@@ -1,6 +1,9 @@
 class SlotsController {
 
+    static tag = "slots";
+
     constructor(apiCommunicator) {
+        this.tag = SlotsController.tag;
         this.apiCommunicator = apiCommunicator;
         this.initialized = false;
     }

@@ -1,6 +1,9 @@
 class MerchListController {
 
+    static tag = "merch";
+
     constructor(apiCommunicator) {
+        this.tag = MerchListController.tag;
         this.apiCommunicator = apiCommunicator;
         this.initialized = false;
         this.dialogInitialized = false;
@@ -91,25 +94,11 @@ class MerchListController {
                 });
                 this.addPeriodDialog.classList.toggle("modal-visible")
 
-                new Noty({
-                    theme: 'metroui',
-                    type: 'success',
-                    text: 'Successfully added period.',
-                    timeout: 2000,
-                    progressBar: true,
-                    layout: 'bottomRight'
-                }).show();
+                notificationManager.showSuccess('Successfully added period.');
 
                 timelineController.refreshDataOnNextNavigation = true;
             } catch (error) {
-                new Noty({
-                    theme: 'metroui',
-                    type: 'error',
-                    text: 'Failed to add period.',
-                    timeout: 2000,
-                    progressBar: true,
-                    layout: 'bottomRight'
-                }).show();
+                notificationManager.showError('Failed to add period.');
             }
         }
     }

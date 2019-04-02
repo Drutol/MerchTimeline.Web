@@ -1,4 +1,4 @@
-#slots-page .slot-item {
+#nav-slots-page .slot-item {
     display: grid;
     grid-template-columns: auto 5em;
 
@@ -10,14 +10,14 @@
     padding: 15px;
 }
 
-#slots-page .slot-item title {
+#nav-slots-page .slot-item title {
     grid-column: 1;
 
     display: flex;
     align-items: center;
 }
 
-#slots-page .slot-item button {
+#nav-slots-page .slot-item button {
     grid-column: 2;
 
     background: white;
@@ -26,11 +26,11 @@
     border: 0;
 }
 
-#slots-page .slot-item button:hover {
+#nav-slots-page .slot-item button:hover {
     color: #e64900;
 }
 
-#slots-page .add-slot {
+#nav-slots-page .add-slot {
     display: grid;
     grid-template-columns: auto 5em;
     width: auto;
@@ -42,17 +42,17 @@
     padding: 16px;
 }
 
-#slots-page input {
+#nav-slots-page input {
     grid-column: 1;
 }
 
-#slots-page .add-slot button {
+#nav-slots-page .add-slot button {
     background: white;
     font-size: 20px;
     transition: color 0.1s ease-in-out;
     border: 0;
 }
 
-#slots-page .add-slot button:hover {
+#nav-slots-page .add-slot button:hover {
     color: #e64900;
 }

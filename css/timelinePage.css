@@ -1,4 +1,4 @@
-#timeline-page .timeline-picture {
+#nav-timeline-page .timeline-picture {
     height: 130px;
 }
 
@@ -50,7 +50,7 @@
     transition: opacity 0.3s;
 }
 
-#timeline-page .container-visible {
+#nav-timeline-page .container-visible {
     visibility: visible;
     opacity: 1;
 }
@@ -82,6 +82,6 @@
     justify-self: stretch;
 }
 
-#timeline-page .pane-opened {
+#nav-timeline-page .pane-opened {
     width: 300px;
 }
