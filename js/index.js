@@ -4,12 +4,13 @@ let viewController;
 let timelineController;
 let merchListController;
 let slotsController;
-let notificationManager;
+let dialogsManager;
 
 document.addEventListener("DOMContentLoaded", function (ev) {
     apiCommunicator = new ApiCommunicator();
+    dialogsManager = new DialogsManager();
     timelineController = new TimelineController(apiCommunicator);
-    merchListController = new MerchListController(apiCommunicator);
+    merchListController = new MerchListController(apiCommunicator, dialogsManager);
     slotsController = new SlotsController(apiCommunicator);
 
     viewController = new ViewController(
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function (ev) {
 });
 
 class NotificationManager {
-    showSuccess(text) {
+    static showSuccess(text) {
         new Noty({
             theme: 'metroui',
             type: 'success',
@@ -33,7 +34,7 @@ class NotificationManager {
         }).show();
     }
 
-    showError(text) {
+    static showError(text) {
         new Noty({
             theme: 'metroui',
             type: 'error',
@@ -44,7 +45,7 @@ class NotificationManager {
         }).show();
     }
 
-    showWarning(text) {
+    static showWarning(text) {
         new Noty({
             theme: 'metroui',
             type: 'warning',
@@ -59,4 +60,8 @@ class NotificationManager {
 Date.prototype.addHours = function (h) {
     this.setTime(this.getTime() + (h * 60 * 60 * 1000));
     return this;
+}
+
+HTMLElement.prototype.getLastChild = function() {
+    return this.childNodes[this.childNodes.length - 2];
 }

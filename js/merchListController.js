@@ -2,19 +2,17 @@ class MerchListController {
 
     static tag = "merch";
 
-    constructor(apiCommunicator) {
+    constructor(apiCommunicator, dialogsManager) {
         this.tag = MerchListController.tag;
         this.apiCommunicator = apiCommunicator;
         this.initialized = false;
         this.dialogInitialized = false;
+        this.dialogsManager = dialogsManager;
     }
 
     async navigatedTo() {
         if (this.initialized)
             return;
-
-        this.addPeriodDialog = document.getElementById("add-period-modal");
-        this.setUpDialog();
 
         await this.refreshData();
 
@@ -40,7 +38,7 @@ class MerchListController {
         merch.sort((a, b) => a.kind - b.kind).reverse().forEach(merchItem => {
             let node = document.importNode(template.content, true);
             container.appendChild(node);
-            this.itemTemplate(container.childNodes[container.childNodes.length - 2], merchItem);
+            this.itemTemplate(container.getLastChild(), merchItem);
         });
     }
 
@@ -50,64 +48,6 @@ class MerchListController {
     }
 
     async itemClicked(item) {
-        this.addPeriodDialog.classList.toggle("modal-visible")
-
-        if (!this.dialogInitialized) {
-            this.startDatePicker = new Pikaday({
-                field: document.getElementById('add-period-modal-startdate'),
-                defaultDate: new Date(),
-                setDefaultDate: true
-            });
-            this.endDatePicker = new Pikaday({ field: document.getElementById('add-period-modal-enddate') });
-            this.slotPicker = document.getElementById('add-period-modal-slots');
-            this.addPeriodButton = document.getElementById('add-period-modal-button');
-
-            this.dialogInitialized = true;
-        }
-
-        while (this.slotPicker.firstChild) {
-            this.slotPicker.removeChild(this.slotPicker.firstChild);
-        }
-
-        let slots;
-        try {
-            slots = await this.apiCommunicator.getSlots();
-        }
-        catch {
-            return;
-        }
-
-        slots.forEach(slot => {
-            var option = document.createElement("option");
-            option.value = slot.id;
-            option.text = slot.name;
-            this.slotPicker.add(option);
-        });
-
-        this.addPeriodButton.onclick = async () => {
-            try {
-                await this.apiCommunicator.addUsagePeriod({
-                    SlotId: this.slotPicker.options[this.slotPicker.selectedIndex].value,
-                    MerchItemId: item.id,
-                    Start: this.startDatePicker.getDate(),
-                    End: this.endDatePicker.getDate(),
-                });
-                this.addPeriodDialog.classList.toggle("modal-visible")
-
-                notificationManager.showSuccess('Successfully added period.');
-
-                timelineController.refreshDataOnNextNavigation = true;
-            } catch (error) {
-                notificationManager.showError('Failed to add period.');
-            }
-        }
-    }
-
-    setUpDialog() {
-        window.addEventListener("click", (event) => {
-            if (event.target == this.addPeriodDialog) {
-                this.addPeriodDialog.classList.toggle("modal-visible")
-            };
-        });
+        this.dialogsManager.showDialog(AddPeriodDialog, item);    
     }
 }

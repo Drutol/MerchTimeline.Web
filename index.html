@@ -25,6 +25,7 @@
     <script type="text/javascript" src="js/merchListController.js"></script>
     <script type="text/javascript" src="js/timelineController.js"></script>
     <script type="text/javascript" src="js/viewController.js"></script>
+    <script type="text/javascript" src="js/dialogs.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
 
@@ -114,9 +115,13 @@
         </div>
     </header>
 
-    <div id="add-period-modal" class="modal">
+    <div id="modal-container" class="modal">
         <!-- Modal content -->
-        <div class="modal-content">
+        <div id="modal-container-content" class="modal-content">
+            
+        </div>
+
+        <template id="modal-add-period-template">
             <div class="add-period-modal-form">
                 <h2>Add usage period</h2>
                 <p>Start date:</p>
@@ -130,7 +135,7 @@
                     Add
                 </button>
             </div>
-        </div>
+        </template>
     </div>
 
 </body>

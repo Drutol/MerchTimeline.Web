@@ -120,7 +120,7 @@ class TimelineController {
                     return;
                 }
 
-                notificationManager.showSuccess('Successfully edited period.');
+                NotificationManager.showSuccess('Successfully edited period.');
 
                 this.closePane();
                 this.refreshData();
@@ -132,7 +132,7 @@ class TimelineController {
                     return;
                 }
 
-                notificationManager.showSuccess('Successfully removed period.');
+                NotificationManager.showSuccess('Successfully removed period.');
 
                 this.closePane();
                 this.refreshData();

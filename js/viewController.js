@@ -54,9 +54,9 @@ class ViewController {
         }
 
         this.tokenButton.onclick = () => {
-            let token = prompt("Acess token", null);
+            let token = prompt("Access token", "");
 
-            if(token == null)
+            if(token == null || token == "")
                 return;
 
             window.localStorage.setItem("authToken", token);
