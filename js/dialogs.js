@@ -6,6 +6,7 @@ class DialogsManager {
         this.containerContent = document.getElementById("modal-container-content")
 
         this.dialogs[AddPeriodDialog.tag] = new AddPeriodDialog(this);
+        this.dialogs[AddMerchItemDialog.tag] = new AddMerchItemDialog(this);
 
         window.addEventListener("click", (event) => {
             if (event.target == this.container) {
@@ -45,7 +46,9 @@ class Dialog {
     hide() {
         this.parent.containerContent.removeChild(this.view);
         this.parent.hideContainer();
-        this.onHide();
+        if (typeof this.onHide === "function") {
+            this.onHide();
+        }
     }
 }
 
@@ -59,14 +62,15 @@ class AddPeriodDialog extends Dialog {
     }
 
     async onShow(item) {
-        this.startDatePicker = new Pikaday({
+        let startDatePicker = new Pikaday({
             field: document.getElementById('add-period-modal-startdate'),
             defaultDate: new Date(),
             setDefaultDate: true
         });
-        this.endDatePicker = new Pikaday({ field: document.getElementById('add-period-modal-enddate') });
-        this.slotPicker = document.getElementById('add-period-modal-slots');
-        this.addPeriodButton = document.getElementById('add-period-modal-button');
+        let endDatePicker = new Pikaday({ field: document.getElementById('add-period-modal-enddate') });
+        let slotPicker = document.getElementById('add-period-modal-slots');
+        let addPeriodButton = document.getElementById('add-period-modal-button');
+        let editButton = document.getElementById('add-period-modal-edit-button');
 
         let slots;
         try {
@@ -80,16 +84,22 @@ class AddPeriodDialog extends Dialog {
             var option = document.createElement("option");
             option.value = slot.id;
             option.text = slot.name;
-            this.slotPicker.add(option);
+            slotPicker.add(option);
         });
 
-        this.addPeriodButton.onclick = async () => {
+        editButton.onclick = async () => {
+            this.hide();
+
+            dialogsManager.showDialog(AddMerchItemDialog, item);
+        }
+
+        addPeriodButton.onclick = async () => {
             try {
                 await apiCommunicator.addUsagePeriod({
-                    SlotId: this.slotPicker.options[this.slotPicker.selectedIndex].value,
+                    SlotId: slotPicker.options[slotPicker.selectedIndex].value,
                     MerchItemId: item.id,
-                    Start: this.startDatePicker.getDate(),
-                    End: this.endDatePicker.getDate(),
+                    Start: startDatePicker.getDate(),
+                    End: endDatePicker.getDate(),
                 });
 
                 this.hide();
@@ -105,5 +115,77 @@ class AddPeriodDialog extends Dialog {
 
     onHide() {
 
+    }
+}
+
+class AddMerchItemDialog extends Dialog {
+    static tag = "add-merch-item";
+
+    constructor(parentManager) {
+        super(AddMerchItemDialog.tag);
+
+        this.parent = parentManager;
+    }
+
+    async onShow(item) {
+
+        let nameTextBox = document.getElementById("add-merch-item-name");
+        let imageTextBox = document.getElementById("add-merch-item-image");
+        let kindComboBox = document.getElementById("add-merch-item-kind");
+        let button = document.getElementById("add-merch-item-button");
+        let removeButton = document.getElementById("add-merch-item-remove");
+
+        if (item) {
+            nameTextBox.value = item.name;
+            imageTextBox.value = item.imageUrl;
+            kindComboBox.selectedIndex = item.kind;
+            removeButton.style.display = "block";
+        }
+        else {
+            removeButton.style.display = "none";
+        }
+
+        removeButton.onclick = async () => {
+            try {
+                await apiCommunicator.removeMerchItem({
+                    Id: item.id
+                });
+                NotificationManager.showSuccess('Successfully removed merch item.');
+            
+                this.hide();
+            } catch (error) {
+                NotificationManager.showError('Failed to remove merch item.');
+            }
+        };
+
+        button.onclick = async () => {
+            try {
+                if (item) {
+                    await apiCommunicator.editMerchItem({
+                        MerchItem: {
+                            Id: item.id,
+                            Kind: kindComboBox.options[kindComboBox.selectedIndex].value,
+                            Name: nameTextBox.value,
+                            ImageUrl: imageTextBox.value
+                        }
+                    });
+                    NotificationManager.showSuccess('Successfully edited merch item.');
+                }
+                else {
+                    await apiCommunicator.addMerchItem({
+                        MerchItem: {
+                            Kind: kindComboBox.options[kindComboBox.selectedIndex].value,
+                            Name: nameTextBox.value,
+                            ImageUrl: imageTextBox.value
+                        }
+                    });
+                    NotificationManager.showSuccess('Successfully added merch item.');
+                }
+
+                this.hide();
+            } catch (error) {
+                NotificationManager.showError('Failed to process merch item.');
+            }
+        };
     }
 }

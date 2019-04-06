@@ -1,4 +1,10 @@
 #nav-merch-page {
+    display: grid;
+}
+
+#merch-grid {
+    grid-row: 1;
+    grid-column: 1;
     text-align: justify;
     text-align-last: auto;
     overflow-y: scroll;
@@ -32,3 +38,40 @@
     margin: 16px;
     box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, .1);
 }
+
+#merch-page-add-button {
+    display: flex;
+    align-items: center;
+    grid-row: 1;
+    grid-column: 1;
+
+    width: 4em;
+    height: 4em;
+
+    margin: 2em;
+    z-index: 1;
+
+    border-radius: 2em;
+    background: linear-gradient(120deg,  #ff5c11, #df00d3);
+
+    align-self: flex-end;
+    justify-self: end;
+
+    justify-content: center;
+    justify-items: center;
+
+    box-shadow: 1px 2px 5px 2px rgba(0, 0, 0, .6);
+    transition: box-shadow 0.1s ease-in-out;
+}
+
+#merch-page-add-button:hover {
+    box-shadow: 1px 2px 5px 3px rgba(0, 0, 0, .6)
+}
+
+
+#merch-page-add-button i {
+    color: white;
+    font-size: 1.5em;
+    text-shadow: 1px 1px rgba(0, 0, 0, .6);
+}
+

@@ -58,6 +58,24 @@ class ApiCommunicator {
         return JSON.parse(json);
     }
 
+    async addMerchItem(item) {
+        let json = await this.httpPostAsync(
+            `${this.baseAddress}/merchItems`, JSON.stringify(item));
+        return JSON.parse(json);
+    }
+
+    async editMerchItem(item) {
+        let json = await this.httpPatchAsync(
+            `${this.baseAddress}/merchItems`, JSON.stringify(item));
+        return JSON.parse(json);
+    }
+
+    async removeMerchItem(item) {
+        let json = await this.httpDeleteAsync(
+            `${this.baseAddress}/merchItems/${item.Id}`);
+        return JSON.parse(json);
+    }
+
     httpGetAsync(url) {
         return this.httpAsync(url, "GET", null);
     }
@@ -68,6 +86,10 @@ class ApiCommunicator {
 
     httpDeleteAsync(url) {
         return this.httpAsync(url, "DELETE", null);
+    }
+
+    httpPatchAsync(url) {
+        return this.httpAsync(url, "PATCH", null);
     }
 
     httpAsync(url, method, body) {
@@ -93,10 +115,10 @@ class ApiCommunicator {
                     }
                     else {
                         if (xmlHttp.status == 401) {
-                            notificationManager.showWarning('Failed to authorize with provided token.');
+                            NotificationManager.showWarning('Failed to authorize with provided token.');
                         }
                         else {
-                            notificationManager.showError('Failed to communicate with the server.');
+                            NotificationManager.showError('Failed to communicate with the server.');
                         }
                         reject();
                     }

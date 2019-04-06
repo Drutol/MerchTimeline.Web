@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/timelinePage.css">
     <link rel="stylesheet" type="text/css" href="css/merchList.css">
     <link rel="stylesheet" type="text/css" href="css/slots.css">
-    <link rel="stylesheet" type="text/css" href="css/addPeriodModal.css">
+    <link rel="stylesheet" type="text/css" href="css/dialogs.css">
     <link rel="stylesheet" type="text/css" href="css/buttons.css">
 
 
@@ -56,6 +56,10 @@
             <ul id="merch-grid">
 
             </ul>
+
+            <a id="merch-page-add-button">
+                <i class="fas fa-plus"></i>
+            </a>
 
             <template id="merch-item-template">
                 <div class="merch-item">
@@ -133,6 +137,32 @@
                 <p></p>
                 <button class="btn accent-gradient" id="add-period-modal-button">
                     Add
+                </button>
+                <button class="btn peach-gradient" id="add-period-modal-edit-button">
+                    Edit
+                </button>
+            </div>
+        </template>
+
+        <template id="modal-add-merch-item-template">
+            <div class="add-merch-item-form">
+                <h2>Add merch item</h2>
+                <p>Name:</p>
+                <input type="text" id="add-merch-item-name" autocomplete="off">
+                <p>Image link:</p>
+                <input type="search" id="add-merch-item-image" autocomplete="off">
+                <p>Kind:</p>
+                <select id="add-merch-item-kind">
+                    <option value="0">Vertical Tapestry</option>    
+                    <option value="1">Horizontal Tapestry</option>    
+                    <option value="2">Dakimakura</option>    
+                </select>
+                <p></p>
+                <button class="btn accent-gradient" id="add-merch-item-button">
+                    Add
+                </button>
+                <button class="btn aqua-gradient" id="add-merch-item-remove">
+                    Remove
                 </button>
             </div>
         </template>

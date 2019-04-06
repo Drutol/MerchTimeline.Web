@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function (ev) {
         merchListController,
         slotsController);
 
-    viewController.navigate(TimelineController);
+    viewController.navigate(MerchListController);
 });
 
 class NotificationManager {

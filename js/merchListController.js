@@ -8,11 +8,17 @@ class MerchListController {
         this.initialized = false;
         this.dialogInitialized = false;
         this.dialogsManager = dialogsManager;
+
+        this.addMerchButton = document.getElementById("merch-page-add-button");
     }
 
     async navigatedTo() {
         if (this.initialized)
             return;
+
+        this.addMerchButton.onclick = () => {
+            this.dialogsManager.showDialog(AddMerchItemDialog);
+        }
 
         await this.refreshData();
 
