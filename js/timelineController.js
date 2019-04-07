@@ -111,10 +111,18 @@ class TimelineController {
         }
         else {
             document.getElementById('edit-pane-button-update').onclick = async () => {
+
+                let endDate = this.editPaneEndDateInput.value == "" ? null : this.endDatePicker.getDate();
+
+                if (!Utils.validatePeriodDates(this.startDatePicker.getDate(), endDate)) {
+                    NotificationManager.showWarning('Provided dates are invalid.');
+                    return;
+                }
+
                 try {
                     await this.apiCommunicator.modifyPeriod(this.editedItem.id, {
                         Start: this.startDatePicker.getDate(),
-                        End: this.editPaneEndDateInput.value == "" ? null : this.endDatePicker.getDate(),
+                        End: endDate,
                     })
                 } catch {
                     return;

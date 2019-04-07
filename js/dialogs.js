@@ -95,6 +95,12 @@ class AddPeriodDialog extends Dialog {
 
         addPeriodButton.onclick = async () => {
             try {
+
+                if (!Utils.validatePeriodDates(startDatePicker.getDate(), endDatePicker.getDate())) {
+                    NotificationManager.showWarning('Provided dates are invalid.');
+                    return;
+                }
+
                 await apiCommunicator.addUsagePeriod({
                     SlotId: slotPicker.options[slotPicker.selectedIndex].value,
                     MerchItemId: item.id,
@@ -151,7 +157,7 @@ class AddMerchItemDialog extends Dialog {
                     Id: item.id
                 });
                 NotificationManager.showSuccess('Successfully removed merch item.');
-            
+
                 this.hide();
             } catch (error) {
                 NotificationManager.showError('Failed to remove merch item.');

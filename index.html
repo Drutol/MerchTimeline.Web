@@ -40,8 +40,7 @@
                     <p>Start date:</p>
                     <input type="text" class="gradient-box" id="edit-pane-startdate" autocomplete="off">
                     <p>End date:</p>
-                    <input placeholder="No end date" id="edit-pane-enddate" autocomplete="off"
-                        type="search">
+                    <input placeholder="No end date" id="edit-pane-enddate" autocomplete="off" type="search">
                     <button class="btn accent-gradient" id="edit-pane-button-update">
                         Update
                     </button>
@@ -57,13 +56,17 @@
 
             </ul>
 
+            <div class="search-merch">
+                <input id="search-merch-input" placeholder="Search...">
+            </div>
+
             <a id="merch-page-add-button">
                 <i class="fas fa-plus"></i>
             </a>
 
             <template id="merch-item-template">
                 <div class="merch-item">
-                    <img tag="item-img" />
+                    <img/>
                 </div>
             </template>
         </div>
@@ -122,7 +125,7 @@
     <div id="modal-container" class="modal">
         <!-- Modal content -->
         <div id="modal-container-content" class="modal-content">
-            
+
         </div>
 
         <template id="modal-add-period-template">
@@ -153,9 +156,9 @@
                 <input type="search" id="add-merch-item-image" autocomplete="off">
                 <p>Kind:</p>
                 <select id="add-merch-item-kind">
-                    <option value="0">Vertical Tapestry</option>    
-                    <option value="1">Horizontal Tapestry</option>    
-                    <option value="2">Dakimakura</option>    
+                    <option value="0">Vertical Tapestry</option>
+                    <option value="1">Horizontal Tapestry</option>
+                    <option value="2">Dakimakura</option>
                 </select>
                 <p></p>
                 <button class="btn accent-gradient" id="add-merch-item-button">

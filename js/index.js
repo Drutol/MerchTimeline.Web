@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function (ev) {
         merchListController,
         slotsController);
 
-    viewController.navigate(MerchListController);
+    viewController.navigate(TimelineController);
 });
 
 class NotificationManager {
@@ -54,6 +54,21 @@ class NotificationManager {
             progressBar: true,
             layout: 'bottomRight'
         }).show();
+    }
+}
+
+class Utils {
+    static validatePeriodDates(start, end) {
+        if(end == null)
+            return true;
+
+        if(end < start)
+            return false;
+
+        if(start.getDate() == end.getDate())
+            return false;
+
+        return true;
     }
 }
 
