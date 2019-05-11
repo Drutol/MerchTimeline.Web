@@ -1,8 +1,8 @@
 class ApiCommunicator {
 
     constructor() {
-        //this.baseAddress = "https://mylovelyvps.ml/api";
-        this.baseAddress = "https://localhost:5001/api";
+        this.baseAddress = "https://mylovelyvps.ml/api";
+        //this.baseAddress = "https://localhost:5001/api";
     }
 
     async getTimeline() {
@@ -36,18 +36,18 @@ class ApiCommunicator {
     }
 
     async addUsagePeriod(period) {
-        period.Start = period.Start.addHours(1 + 1 / 60);
-        if (period.End != null)
-            period.End = period.End.addHours(1 + 1 / 60);
+        let offset = new Date().getTimezoneOffset();
+        period.End =period.End == null ? null : period.End.addMinutes(-offset);
+        period.Start = period.Start.addMinutes(-offset);
         let json = await this.httpPostAsync(
             `${this.baseAddress}/timeline`, JSON.stringify(period));
         return JSON.parse(json);
     }
 
     async modifyPeriod(id, period) {
-        period.Start = period.Start.addHours(1 + 1 / 60);
-        if (period.End != null)
-            period.End = period.End.addHours(1 + 1 / 60);
+        let offset = new Date().getTimezoneOffset();
+        period.End = period.End == null ? null : period.End.addMinutes(-offset);
+        period.Start = period.Start.addMinutes(-offset);
         let json = await this.httpPostAsync(
             `${this.baseAddress}/timeline/${id}/modify`, JSON.stringify(period));
         return JSON.parse(json);
